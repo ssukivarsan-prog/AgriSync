@@ -1,0 +1,25 @@
+model:
+  name: "agrivyn_disease_mobilenetv3"
+  architecture: "mobilenet_v3_small"
+  num_classes: 38
+  pretrained: true
+  input_size: [224, 224]
+
+training:
+  batch_size: 32
+  epochs: 5
+  learning_rate: 0.001
+  weight_decay: 0.0001
+  sample_per_class: 80
+  random_seed: 42
+
+data:
+  dataset_root: "DATASETS/Crop Disease Detection/PlantVillage"
+  train_split: "train"
+  val_split: "val"
+
+paths:
+  save_dir: "models/disease"
+  model_filename: "disease_model_v1.pt"
+  class_mapping: "models/disease/class_mapping.json"
+  metrics_output: "models/disease/metrics.json"

@@ -1,0 +1,26 @@
+{
+  "model_name": "AgriVyn Nutrient Stress Classifier",
+  "architecture": "MobileNetV3-Small",
+  "task": "MULTI_CLASS_CLASSIFICATION",
+  "num_classes": 9,
+  "classes": [
+    "ashgourd_fresh",
+    "ashgourd_nitrogen",
+    "ashgourd_potassium",
+    "bittergourd_fresh",
+    "bittergourd_nitrogen",
+    "bittergourd_potassium",
+    "snakegourd_fresh",
+    "snakegourd_nitrogen",
+    "snakegourd_potassium"
+  ],
+  "total_test_samples": 135,
+  "accuracy": 0.4963,
+  "precision": 0.5505,
+  "recall": 0.4963,
+  "f1_score": 0.4418,
+  "avg_cpu_latency_ms": 18.4,
+  "model_size_mb": 5.95,
+  "version": "1.0.0",
+  "edge_ready": true
+}

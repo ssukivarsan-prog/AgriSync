@@ -1,0 +1,20 @@
+model:
+  name: "agrivyn_seg_yolov8n_seg"
+  architecture: "yolov8n-seg.pt"
+  num_classes: 1
+  input_size: 640
+
+training:
+  epochs: 10
+  batch_size: 8
+  imgsz: 640
+  random_seed: 42
+  device: "cpu"
+
+data:
+  dataset_root: "DATASETS/Crop Dataset — Sugarcane-focused/Crop_Diseases"
+
+paths:
+  save_dir: "models/segmentation"
+  model_filename: "seg_model_v1.pt"
+  metrics_output: "models/segmentation/metrics.json"

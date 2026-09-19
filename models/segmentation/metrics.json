@@ -1,0 +1,18 @@
+{
+  "model_name": "AgriVyn Crop Lesion Segmentation",
+  "architecture": "YOLOv8n-seg",
+  "task": "INSTANCE_SEGMENTATION",
+  "num_classes": 1,
+  "classes": [
+    "disease_lesion"
+  ],
+  "training_time_seconds": 77.48,
+  "mask_precision": 0.0033,
+  "mask_recall": 0.4167,
+  "mask_mAP50": 0.1907,
+  "mask_mAP50_95": 0.0941,
+  "avg_cpu_latency_ms": 54.19,
+  "model_size_mb": 6.43,
+  "version": "1.0.0",
+  "edge_ready": true
+}

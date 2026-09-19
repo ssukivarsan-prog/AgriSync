@@ -1,0 +1,20 @@
+{
+  "model_name": "AgriVyn AgroPest-12 Pest Detector",
+  "architecture": "YOLOv8n",
+  "task": "OBJECT_DETECTION_BBOX",
+  "num_classes": 12,
+  "classes": [
+    "Ants", "Bees", "Beetles", "Caterpillars", "Earthworms", "Earwigs",
+    "Grasshoppers", "Moths", "Slugs", "Snails", "Wasps", "Weevils"
+  ],
+  "total_train_samples": 400,
+  "total_test_samples": 100,
+  "precision": 0.877,
+  "recall": 0.0447,
+  "mAP50": 0.16,
+  "mAP50_95": 0.0907,
+  "avg_cpu_latency_ms": 43.3,
+  "model_size_mb": 5.93,
+  "version": "1.0.0",
+  "edge_ready": true
+}

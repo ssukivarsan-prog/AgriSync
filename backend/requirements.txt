@@ -1,0 +1,41 @@
+# ============================================================
+# AgriVyn / AgriSync — Python Backend Dependencies
+# Install with: pip install -r backend/requirements.txt
+# Python 3.10+ required (tested on Python 3.14)
+# ============================================================
+
+# ── Web Framework ─────────────────────────────────────────────
+fastapi==0.141.1
+uvicorn==0.52.4
+starlette==1.6.0
+python-multipart==0.0.32
+
+# ── Database (async SQLite ORM) ───────────────────────────────
+SQLAlchemy==2.0.52
+aiosqlite==0.22.1
+
+# ── Data Validation ───────────────────────────────────────────
+pydantic==2.13.4
+pydantic_core==2.46.4
+
+# ── Computer Vision & Deep Learning ──────────────────────────
+torch==2.13.0
+torchvision==0.28.0
+opencv-python==5.0.0.93
+pillow==12.3.0
+ultralytics==8.4.130
+
+# ── Machine Learning ─────────────────────────────────────────
+scikit-learn==1.9.0
+xgboost==3.4.0
+joblib==1.5.3
+numpy==2.5.2
+
+# ── Telephony & SMS (Twilio Voice API) ───────────────────────
+twilio==9.11.0
+
+# ── HTTP & Networking ─────────────────────────────────────────
+httpx==0.28.1
+
+# ── Environment & Utilities ───────────────────────────────────
+python-dotenv==1.2.3

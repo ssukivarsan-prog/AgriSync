@@ -1,0 +1,20 @@
+path: d:/FLUTTER PROJECTS/AgriVyn/data/processed/agropest_subset
+train: images/train
+val: images/val
+test: images/test
+
+nc: 12
+names: [
+  "Ants",
+  "Bees",
+  "Beetles",
+  "Caterpillars",
+  "Earthworms",
+  "Earwigs",
+  "Grasshoppers",
+  "Moths",
+  "Slugs",
+  "Snails",
+  "Wasps",
+  "Weevils"
+]

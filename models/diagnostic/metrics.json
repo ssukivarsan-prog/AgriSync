@@ -1,0 +1,104 @@
+{
+  "disease_diagnostic": {
+    "model": "RandomForestClassifier",
+    "num_features": 30,
+    "test_accuracy": 1.0,
+    "test_precision": 1.0,
+    "test_recall": 1.0,
+    "test_f1": 1.0,
+    "cv_5fold_mean": 1.0,
+    "top_symptoms": [
+      {
+        "symptom": "Are the lesions expanding over time?",
+        "importance": 0.0699709109116065
+      },
+      {
+        "symptom": "Is there a yellow halo around the spots?",
+        "importance": 0.06719376927878468
+      },
+      {
+        "symptom": "Is the disease more active during rainy days?",
+        "importance": 0.05985501109387847
+      },
+      {
+        "symptom": "Are concentric rings visible clearly on the leaves?",
+        "importance": 0.059159138521037075
+      },
+      {
+        "symptom": "Are the leaf spots circular with concentric rings?",
+        "importance": 0.058283267712332665
+      },
+      {
+        "symptom": "Is there any rotting seen on fruit?",
+        "importance": 0.054674728002482
+      },
+      {
+        "symptom": "Is the infection found only on mature leaves?",
+        "importance": 0.045676975168522656
+      },
+      {
+        "symptom": "Does the leaf show signs of early yellowing?",
+        "importance": 0.04461065026813917
+      },
+      {
+        "symptom": "Are the leaf margins turning brown?",
+        "importance": 0.044134938454365065
+      },
+      {
+        "symptom": "Are stems or fruits also affected?",
+        "importance": 0.04278496021051189
+      }
+    ]
+  },
+  "insect_diagnostic": {
+    "model": "RandomForestClassifier",
+    "num_features": 30,
+    "test_accuracy": 1.0,
+    "test_precision": 1.0,
+    "test_recall": 1.0,
+    "test_f1": 1.0,
+    "cv_5fold_mean": 1.0,
+    "top_symptoms": [
+      {
+        "symptom": "Is there visible discoloration of the crop due to pest feeding?",
+        "importance": 0.14034945541915367
+      },
+      {
+        "symptom": "Has the crop been attacked by armyworm in previous seasons?",
+        "importance": 0.09028001587712917
+      },
+      {
+        "symptom": "Are visible bite marks present on the leaf?",
+        "importance": 0.0883645032090363
+      },
+      {
+        "symptom": "Are there signs of curled leaves due to feeding?",
+        "importance": 0.06830589164237885
+      },
+      {
+        "symptom": "Is the armyworm feeding on the crop?",
+        "importance": 0.06651755023865304
+      },
+      {
+        "symptom": "Is the armyworm present on the stem?",
+        "importance": 0.05178590290543214
+      },
+      {
+        "symptom": "Is the stem portion of the plant affected?",
+        "importance": 0.04975390222753243
+      },
+      {
+        "symptom": "Does the armyworm show striping or lines on its body?",
+        "importance": 0.043592254640085724
+      },
+      {
+        "symptom": "Is the armyworm population increasing?",
+        "importance": 0.03917888061709558
+      },
+      {
+        "symptom": "Are larvae of the armyworm visible?",
+        "importance": 0.03753952366409547
+      }
+    ]
+  }
+}

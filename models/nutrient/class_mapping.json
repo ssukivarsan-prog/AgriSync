@@ -1,0 +1,25 @@
+{
+  "class_to_idx": {
+    "ashgourd_fresh": 0,
+    "ashgourd_nitrogen": 1,
+    "ashgourd_potassium": 2,
+    "bittergourd_fresh": 3,
+    "bittergourd_nitrogen": 4,
+    "bittergourd_potassium": 5,
+    "snakegourd_fresh": 6,
+    "snakegourd_nitrogen": 7,
+    "snakegourd_potassium": 8
+  },
+  "idx_to_class": {
+    "0": "ashgourd_fresh",
+    "1": "ashgourd_nitrogen",
+    "2": "ashgourd_potassium",
+    "3": "bittergourd_fresh",
+    "4": "bittergourd_nitrogen",
+    "5": "bittergourd_potassium",
+    "6": "snakegourd_fresh",
+    "7": "snakegourd_nitrogen",
+    "8": "snakegourd_potassium"
+  },
+  "num_classes": 9
+}

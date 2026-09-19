@@ -1,0 +1,125 @@
+# ============================================================
+# AgriVyn Smart Farming Assistant — .gitignore
+# ============================================================
+
+# ── Secrets / Environment ────────────────────────────────────
+.env
+*.env.local
+.env.production
+
+# ── Python ───────────────────────────────────────────────────
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.egg-info/
+*.egg
+dist/
+build/
+.Python
+.cache/
+*.pyc
+pip-log.txt
+pip-delete-this-directory.txt
+.tox/
+.coverage
+.coverage.*
+htmlcov/
+.pytest_cache/
+.mypy_cache/
+
+# ── ML Models (too large for GitHub without LFS) ──────────────
+# Large trained model checkpoints — download from releases
+*.pt
+*.pth
+*.onnx
+*.tflite
+*.h5
+*.pkl
+*.joblib
+*.pb
+models/disease/disease_model_v1.pt
+models/nutrient/nutrient_model_v1.pt
+models/pest/pest_model_v1.pt
+models/segmentation/seg_model_v1.pt
+models/pest/agropest_run/
+models/segmentation/sugarcane_seg_run/
+yolov8n.pt
+yolov8n-seg.pt
+runs/
+
+# ── Database ─────────────────────────────────────────────────
+*.db
+*.sqlite3
+*.sqlite
+data/agrivyn.db
+
+# ── Uploads & Generated Files ────────────────────────────────
+backend/uploads/
+data/uploads/
+*.log
+
+# ── Flutter / Dart ───────────────────────────────────────────
+frontend/.dart_tool/
+frontend/.flutter-plugins
+frontend/.flutter-plugins-dependencies
+frontend/.idea/
+frontend/build/
+frontend/*.iml
+frontend/.packages
+frontend/pubspec.lock
+
+# ── Android build artifacts ──────────────────────────────────
+frontend/android/.gradle/
+frontend/android/local.properties
+frontend/android/key.properties
+frontend/android/app/debug.keystore
+frontend/android/app/google-services.json
+frontend/android/captures/
+frontend/android/.idea/
+frontend/android/gradle/
+
+# ── iOS ──────────────────────────────────────────────────────
+frontend/ios/Pods/
+frontend/ios/.symlinks/
+frontend/ios/Flutter/Generated.xcconfig
+frontend/ios/Flutter/flutter_export_environment.sh
+frontend/ios/ServiceDefinitions.json
+frontend/ios/Runner/GeneratedPluginRegistrant.*
+
+# ── Windows Desktop build ────────────────────────────────────
+frontend/windows/flutter/generated_plugin_registrant.cc
+frontend/windows/flutter/generated_plugin_registrant.h
+frontend/windows/flutter/generated_plugins.cmake
+
+# ── Web build ────────────────────────────────────────────────
+frontend/web/icons/
+
+# ── IDE & OS ─────────────────────────────────────────────────
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# ── Large presentation / binary files ────────────────────────
+presentation_flow.html
+AgriVyn_System_Flow_And_Architecture.pdf
+
+# ── Datasets (very large — keep structure, ignore raw data) ──
+DATASETS/
+
+# ── Training run artifacts ───────────────────────────────────
+training/__pycache__/
+training/*.log
+
+# ── Test images at root (kept for easy demo) ─────────────────
+# Keeping TEST_*.jpg intentionally — they are small demo samples
+
+# ── ngrok / tunnel configs ───────────────────────────────────
+ngrok.yml
+*.ngrok.io

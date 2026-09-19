@@ -1,0 +1,748 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AgriVyn | Village Agriculture Officer Command Portal</title>
+  <meta name="description" content="AgriVyn Village Agronomy Command Portal: Real-time farm telemetry, feature phone farmer filtering, bilingual SMS advisories, and interactive AI voice call assistant with query logging.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/admin/admin.css">
+</head>
+<body>
+  <!-- Ambient background glow elements -->
+  <div class="glow-orb glow-orb-1"></div>
+  <div class="glow-orb glow-orb-2"></div>
+
+  <!-- Top Navigation Header -->
+  <header class="app-header">
+    <div class="header-left">
+      <div class="brand-logo">
+        <div class="logo-icon">🌱</div>
+        <div class="brand-text">
+          <div class="brand-title">
+            <span class="brand-name">AgriVyn</span>
+            <span class="portal-badge">Village Command Portal</span>
+          </div>
+          <p class="brand-subtitle">Smart Village Farm Telemetry & AI Agronomy Extension Center</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="header-center">
+      <div class="village-selector-wrap">
+        <label for="villageSelect" class="selector-label">JURISDICTION / கிராமம்:</label>
+        <div class="selector-box">
+          <span class="loc-icon">📍</span>
+          <select id="villageSelect" class="village-select">
+            <option value="1" selected>Melattur Panchayat (மெலட்டூர்) — Thanjavur Delta</option>
+            <option value="2">Ammapettai Block (அம்மாபேட்டை) — Cauvery Zone</option>
+            <option value="3">Kumbakonam Central (கும்பகோணம்) — Agro Hub</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <div class="header-right">
+      <div class="officer-profile">
+        <div class="officer-avatar">👨‍🌾</div>
+        <div class="officer-info">
+          <div class="officer-name">Dr. K. Rathinavelu</div>
+          <div class="officer-role">
+            <span class="live-pulse"></span>
+            Village Agri Officer (VAO)
+          </div>
+        </div>
+      </div>
+      <button id="btnOpenRegisterModal" class="btn btn-primary" title="Register Offline Farmer with VAO">
+        <span>➕ Add Offline Farmer</span>
+      </button>
+      <button id="btnQuickCallNumber" class="btn btn-accent" title="Call Any Number with AI Agronomist">
+        <span>📞 Direct Call Demo</span>
+      </button>
+      <button id="btnRefresh" class="btn btn-secondary btn-icon" title="Refresh Live Telemetry">
+        <span class="refresh-icon">🔄</span>
+        <span>Sync Telemetry</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Main Portal Layout -->
+  <main class="main-container">
+
+    <!-- KPI Analytics Cards -->
+    <section class="kpi-grid">
+      <div class="kpi-card glass-card">
+        <div class="kpi-header">
+          <span class="kpi-title">TOTAL REGISTERED FARMERS</span>
+          <span class="kpi-icon-badge bg-green">👥</span>
+        </div>
+        <div class="kpi-value" id="kpiTotalFarmers">7</div>
+        <div class="kpi-subtext">
+          <span class="text-accent" id="kpiTotalAcres">30.9</span> Acres Under Active Monitoring
+        </div>
+      </div>
+
+      <div class="kpi-card glass-card kpi-highlight-warning">
+        <div class="kpi-header">
+          <span class="kpi-title">FEATURE PHONE / NO SMARTPHONE</span>
+          <span class="kpi-icon-badge bg-amber">📞</span>
+        </div>
+        <div class="kpi-value text-amber" id="kpiFeaturePhone">5</div>
+        <div class="kpi-subtext">
+          <strong id="kpiFeaturePct">71%</strong> Offline Farmers (Requires SMS / Voice Call)
+        </div>
+      </div>
+
+      <div class="kpi-card glass-card">
+        <div class="kpi-header">
+          <span class="kpi-title">SMARTPHONE APP USERS</span>
+          <span class="kpi-icon-badge bg-blue">📱</span>
+        </div>
+        <div class="kpi-value text-blue" id="kpiSmartphone">2</div>
+        <div class="kpi-subtext">
+          Direct AgriVyn Mobile App Sync Active
+        </div>
+      </div>
+
+      <div class="kpi-card glass-card kpi-highlight-danger">
+        <div class="kpi-header">
+          <span class="kpi-title">CRITICAL RISK FARMS</span>
+          <span class="kpi-icon-badge bg-red">⚠️</span>
+        </div>
+        <div class="kpi-value text-red" id="kpiCriticalFarms">3</div>
+        <div class="kpi-subtext">
+          Urgent Water Stress / Pathogen Outbreak
+        </div>
+      </div>
+
+      <div class="kpi-card glass-card">
+        <div class="kpi-header">
+          <span class="kpi-title">OFFICER ACTION ITEMS</span>
+          <span class="kpi-icon-badge bg-purple">📋</span>
+        </div>
+        <div class="kpi-value text-purple" id="kpiActionItems">3</div>
+        <div class="kpi-subtext">
+          Pending Voice Call Follow-ups
+        </div>
+      </div>
+    </section>
+
+    <!-- Toolbar: Filters, Search, and View Controls -->
+    <section class="toolbar-section glass-card">
+      <div class="filter-tabs" id="deviceFilterTabs">
+        <button class="filter-tab active" data-filter="all">
+          <span>All Farmers</span>
+          <span class="tab-count" id="countAll">7</span>
+        </button>
+        <button class="filter-tab tab-amber" data-filter="feature_phone">
+          <span>📞 No Smartphone (Feature Phone)</span>
+          <span class="tab-count" id="countFeature">5</span>
+        </button>
+        <button class="filter-tab tab-blue" data-filter="smartphone">
+          <span>📱 Smartphone Users</span>
+          <span class="tab-count" id="countSmart">2</span>
+        </button>
+        <button class="filter-tab tab-red" data-filter="critical">
+          <span>⚠️ Critical Attention Needed</span>
+          <span class="tab-count" id="countCritical">3</span>
+        </button>
+      </div>
+
+      <div class="search-and-controls">
+        <div class="search-input-wrap">
+          <span class="search-icon">🔍</span>
+          <input type="text" id="searchInput" placeholder="Search by farmer name, தமிழ் பெயர், phone, or crop..." class="search-input">
+          <button id="btnClearSearch" class="btn-clear hidden">✕</button>
+        </div>
+
+        <select id="cropFilterSelect" class="crop-select">
+          <option value="ALL">All Crops (அனைத்து பயிர்கள்)</option>
+          <option value="Paddy">Paddy (நெல்)</option>
+          <option value="Groundnut">Groundnut (வேர்க்கடலை)</option>
+          <option value="Cotton">Cotton (பருத்தி)</option>
+          <option value="Sugarcane">Sugarcane (கரும்பு)</option>
+          <option value="Tomato">Tomato (தக்காளி)</option>
+          <option value="Banana">Banana (வாழை)</option>
+        </select>
+      </div>
+    </section>
+
+    <!-- Active Filter Notice for Feature Phone Farmers -->
+    <div id="featurePhoneNotice" class="feature-phone-banner hidden">
+      <div class="banner-icon">📡</div>
+      <div class="banner-content">
+        <h4>Showing Farmers Without Smartphones / Offline Devices</h4>
+        <p>These farmers do not have the mobile application installed. Use the <strong>"Send SMS Summary"</strong> button to dispatch bilingual bulletins or initiate an <strong>"AI Voice Call"</strong> to answer their agricultural queries directly.</p>
+      </div>
+      <button class="btn btn-sm btn-ghost" id="btnDismissNotice">Dismiss</button>
+    </div>
+
+    <!-- Farmers Grid / Cards Section -->
+    <section class="farmers-section">
+      <div class="section-title-row">
+        <h2 class="section-title">
+          <span>Village Farmers Directory</span>
+          <span class="badge badge-pill" id="showingCountBadge">Showing 7 of 7</span>
+        </h2>
+        <div class="view-toggles">
+          <button class="view-btn active" id="btnViewGrid" title="Grid View">▦ Grid</button>
+          <button class="view-btn" id="btnViewTable" title="Table View">☰ Table</button>
+        </div>
+      </div>
+
+      <!-- Farmers Grid Container -->
+      <div id="farmersGrid" class="farmers-grid">
+        <!-- Cards dynamically injected here by admin.js -->
+      </div>
+
+      <!-- Farmers Table Container (Hidden by default) -->
+      <div id="farmersTableWrap" class="farmers-table-wrap glass-card hidden">
+        <table class="farmers-table">
+          <thead>
+            <tr>
+              <th>Farmer & Contact</th>
+              <th>Device & Connectivity</th>
+              <th>Crop & Land Area</th>
+              <th>Soil Moisture</th>
+              <th>TinyML Edge Decision</th>
+              <th>Risk Level</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="farmersTableBody">
+            <!-- Table rows dynamically injected here -->
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <!-- ================================================================= -->
+  <!-- MODAL 1: FARM DEEP DIVE INSPECTOR (What is going on in that farm)  -->
+  <!-- ================================================================= -->
+  <div id="farmModal" class="modal-backdrop hidden" aria-hidden="true">
+    <div class="modal-dialog modal-xl glass-modal">
+      <div class="modal-header">
+        <div class="modal-header-info">
+          <div class="modal-badge" id="modalDeviceBadge">📞 FEATURE PHONE</div>
+          <h2 class="modal-title" id="modalFarmerTitle">Murugan Selvam (முருகன் செல்வம்)</h2>
+          <p class="modal-subtitle" id="modalFarmSubtitle">Cauvery Delta Smart Farm • 5.5 Acres • Melattur South Agraharam</p>
+        </div>
+        <button class="btn-close-modal" id="btnCloseFarmModal">✕</button>
+      </div>
+
+      <div class="modal-body">
+        <!-- Farm Quick Action Bar -->
+        <div class="modal-action-bar">
+          <button class="btn btn-primary" id="btnModalOpenSMS">
+            <span>💬 Send Summary SMS Bulletin</span>
+          </button>
+          <button class="btn btn-accent" id="btnModalOpenVoiceCall">
+            <span>📞 Launch AI Voice Call & Log Queries</span>
+          </button>
+        </div>
+
+        <!-- Telemetry & Sensor Gauges Grid -->
+        <div class="telemetry-box glass-box">
+          <h3 class="box-title">
+            <span>📡 Live IoT Edge Telemetry</span>
+            <span class="telemetry-time" id="modalTelemetryTime">Last Ping: Just now</span>
+          </h3>
+          <div class="gauges-grid">
+            <div class="gauge-card">
+              <div class="gauge-label">SOIL MOISTURE</div>
+              <div class="gauge-value" id="gaugeMoisture">19.4%</div>
+              <div class="gauge-bar-bg">
+                <div class="gauge-bar-fill" id="barMoisture" style="width: 19.4%;"></div>
+              </div>
+              <div class="gauge-footer" id="statusMoisture">CRITICAL DEFICIT</div>
+            </div>
+
+            <div class="gauge-card">
+              <div class="gauge-label">SOIL pH & TEMP</div>
+              <div class="gauge-value" id="gaugePhTemp">6.7 pH • 32.8°C</div>
+              <div class="gauge-sub">Delta Alluvial Clay Loam</div>
+              <div class="gauge-footer text-green">Optimal pH Range</div>
+            </div>
+
+            <div class="gauge-card">
+              <div class="gauge-label">PRIMARY CROP STAGE</div>
+              <div class="gauge-value font-md" id="gaugeCropStage">Paddy (Samba)</div>
+              <div class="gauge-sub" id="gaugeStageSub">Panicle Initiation Stage</div>
+              <div class="gauge-footer text-blue">Cauvery Canal + Borewell</div>
+            </div>
+
+            <div class="gauge-card">
+              <div class="gauge-label">N-P-K NUTRIENT BALANCE</div>
+              <div class="npk-row">
+                <span class="npk-pill">N: <strong id="npkN">145</strong></span>
+                <span class="npk-pill">P: <strong id="npkP">16</strong></span>
+                <span class="npk-pill">K: <strong id="npkK">120</strong></span>
+              </div>
+              <div class="gauge-footer text-amber">kg/hectare (Needs Potassium)</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- TinyML Edge Intelligence & Diagnostic Findings -->
+        <div class="intel-grid">
+          <div class="intel-card glass-box">
+            <h3 class="box-title">🧠 TinyML Edge AI Decision</h3>
+            <div class="tinyml-pill" id="modalTinyMLDecision">IRRIGATE_URGENT_EVAPOTRANSPIRATION_SPIKE</div>
+            <div class="intel-text" id="modalRiskTitle">Acute Water Stress & Canopy Heat Vulnerability (நீர் பற்றாக்குறை அழுத்தம்)</div>
+            <div class="risk-badge-row">
+              <span class="badge" id="modalRiskBadge">CRITICAL SEVERITY</span>
+              <span class="badge badge-outline" id="modalDiseaseName">Paddy Blast (குலை நோய்)</span>
+            </div>
+          </div>
+
+          <div class="intel-card glass-box">
+            <h3 class="box-title">🌾 TNAU Agronomy Protocol & Treatment</h3>
+            <div class="protocol-box">
+              <div class="lang-tag">English Protocol</div>
+              <p id="modalActionEn">Run 1.5-hour furrow irrigation immediately. Apply Tricyclazole 75 WP @ 1g/L of water at dusk.</p>
+            </div>
+            <div class="protocol-box protocol-tamil">
+              <div class="lang-tag">தமிழ் பரிந்துரை</div>
+              <p id="modalActionTa">உடனடியாக 1.5 மணி நேரம் பாசனம் செய்யவும். ட்ரைசைக்ளசோல் 75 WP மருந்தை ஒரு லிட்டர் தண்ணீருக்கு 1 கிராம் கலந்து மாலையில் தெளிக்கவும்.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- History Tabs: SMS Logs vs AI Voice Notes vs Live Call Transcripts -->
+        <div class="history-section glass-box">
+          <div class="history-tabs">
+            <button class="history-tab active" id="tabHistCallNotes">📞 AI Voice Call Notes & Actions (<span id="countCallNotes">1</span>)</button>
+            <button class="history-tab" id="tabHistSMS">💬 SMS Dispatch History (<span id="countSMSLogs">1</span>)</button>
+            <button class="history-tab" id="tabHistCallTranscripts">🎙️ Live Call Transcripts (<span id="countCallTranscripts">0</span>)</button>
+          </div>
+
+          <div id="historyContentCallNotes" class="history-content-tab">
+            <div id="callNotesList" class="call-notes-list">
+              <!-- Dynamically populated -->
+            </div>
+          </div>
+
+          <div id="historyContentSMS" class="history-content-tab hidden">
+            <div id="smsLogsList" class="sms-logs-list">
+              <!-- Dynamically populated -->
+            </div>
+          </div>
+
+          <div id="historyContentCallTranscripts" class="history-content-tab hidden">
+            <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:0.65rem;">
+              <div style="font-size:0.78rem; color:var(--text-muted);">Real phone call conversations — auto-refreshes every 10s</div>
+              <div style="display:flex; align-items:center; gap:0.5rem;">
+                <span id="callTranscriptLiveBadge" style="display:none; background:#dcfce7; color:#15803d; font-size:0.7rem; font-weight:800; padding:2px 8px; border-radius:99px;">&#9679; LIVE</span>
+                <button id="btnRefreshCallTranscripts" class="btn btn-sm btn-secondary" style="font-size:0.72rem; padding:0.3rem 0.65rem;">&#128260; Refresh</button>
+              </div>
+            </div>
+            <div id="callTranscriptsList">
+              <p style="color:var(--text-muted); font-size:0.8rem;">No real phone call transcripts yet. Make a call using the Ring Mobile Phone Now button above.</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ================================================================= -->
+  <!-- MODAL 2: BILINGUAL SMS SUMMARY GENERATOR & DISPATCHER              -->
+  <!-- ================================================================= -->
+  <div id="smsModal" class="modal-backdrop hidden" aria-hidden="true">
+    <div class="modal-dialog modal-md glass-modal">
+      <div class="modal-header">
+        <div class="modal-header-info">
+          <div class="modal-badge">COMMUNICATION DISPATCH</div>
+          <h2 class="modal-title">Send Farm Summary Advisory</h2>
+          <p class="modal-subtitle" id="smsModalRecipient">Recipient: Murugan Selvam • +91 98421 78210</p>
+        </div>
+        <button class="btn-close-modal" id="btnCloseSMSModal">✕</button>
+      </div>
+
+      <div class="modal-body">
+        <div class="sms-lang-switcher">
+          <button class="lang-btn active" id="btnSmsLangTa">தமிழ் (Tamil SMS)</button>
+          <button class="lang-btn" id="btnSmsLangEn">English (Advisory SMS)</button>
+          <button class="lang-btn" id="btnSmsLangBoth">Bilingual (Both)</button>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="smsMessageText">Message Content (Auto-generated from Live Farm State):</label>
+          <textarea id="smsMessageText" class="form-textarea" rows="5" placeholder="Enter advisory message..."></textarea>
+          <div class="textarea-meta">
+            <span id="smsCharCount">145 characters (1 SMS credit)</span>
+            <span class="delivery-route">Route: Telecom BSNL/Airtel Kisan Gateway</span>
+          </div>
+        </div>
+
+        <div class="farmer-device-alert">
+          <span class="device-icon">ℹ️</span>
+          <span>Target device is a <strong>Feature Phone (No Smartphone)</strong>. Text is optimized for standard 2G GSM cellular display without requiring internet access.</span>
+        </div>
+
+        <div id="smsDeliveryResult" class="delivery-receipt-card hidden">
+          <div class="receipt-icon">✅</div>
+          <div class="receipt-details">
+            <div class="receipt-title">Advisory Dispatched Successfully!</div>
+            <div class="receipt-ref" id="receiptRef">Ref: AIRTEL-SMS-TN-981240</div>
+            <div class="receipt-time" id="receiptTime">Delivered at Just now</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <a id="linkNativeSMSApp" href="sms:+919842178210" class="btn btn-secondary" title="Open in Phone SMS App">
+          <span>📱 Open Phone SMS App (`sms:`)</span>
+        </a>
+        <button class="btn btn-secondary" id="btnCancelSMS">Cancel</button>
+        <button class="btn btn-primary" id="btnDispatchSMS">
+          <span>🚀 Dispatch SMS Advisory</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================================================================= -->
+  <!-- MODAL 3: INTERACTIVE AI VOICE CALL SIMULATOR & NOTE LOGGER         -->
+  <!-- ================================================================= -->
+  <div id="voiceModal" class="modal-backdrop hidden" aria-hidden="true">
+    <div class="modal-dialog modal-lg glass-modal voice-modal">
+      <div class="modal-header">
+        <div class="modal-header-info">
+          <div class="modal-badge bg-green-glow">AGRIVYN AI VOICE AGENT</div>
+          <h2 class="modal-title" id="voiceModalFarmerName">AI Voice Call: Murugan Selvam</h2>
+          <p class="modal-subtitle" id="voiceModalPhone">+91 98421 78210 • Feature Phone (Tamil Voice Protocol)</p>
+        </div>
+        <button class="btn-close-modal" id="btnCloseVoiceModal">✕</button>
+      </div>
+
+      <div class="modal-body voice-modal-body">
+        <!-- Real Outbound AI Phone Call Bar (Twilio GSM/PSTN) -->
+        <div class="dial-number-bar glass-box" style="grid-column: 1 / -1; display: flex; flex-direction: column; gap: 0.65rem; background: #ffffff; padding: 1rem 1.25rem; border: 1.5px solid var(--emerald-300, #a7f3d0); border-radius: var(--radius-md); box-shadow: 0 4px 12px rgba(16, 185, 129, 0.08);">
+          <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.5rem;">
+            <div style="display: flex; align-items: center; gap: 0.5rem;">
+              <span style="font-size: 1.1rem;">⚡</span>
+              <div>
+                <div style="font-weight: 800; font-size: 0.88rem; color: var(--emerald-900, #064e3b);">REAL AI TELEPHONE CALL (DIAL TO REAL MOBILE)</div>
+                <div style="font-size: 0.72rem; color: var(--text-muted);">Triggers actual phone call to any mobile number via Twilio Voice with Amazon Polly speech</div>
+              </div>
+            </div>
+            <div style="display: flex; align-items: center; gap: 0.5rem;">
+              <span id="telephonyConfigBadge" class="badge" style="background: #f1f5f9; color: #475569; font-size: 0.72rem; font-weight: 700;">Checking Twilio...</span>
+              <button class="btn btn-sm btn-secondary" id="btnOpenTwilioSettings" style="font-size: 0.75rem; padding: 0.35rem 0.65rem;">
+                <span>⚙️ Twilio Settings</span>
+              </button>
+            </div>
+          </div>
+
+          <div style="display: flex; align-items: center; flex-wrap: wrap; gap: 0.65rem;">
+            <div style="display: flex; flex-direction: column; gap: 0.2rem;">
+              <label for="voiceModalPhoneInput" style="font-size: 0.7rem; font-weight: 700; color: var(--text-muted);">TARGET MOBILE / அலைபேசி:</label>
+              <input type="text" id="voiceModalPhoneInput" class="form-input" style="width: 175px; padding: 0.45rem 0.65rem; border: 1px solid var(--border-medium); border-radius: var(--radius-sm); font-family: var(--font-mono); font-weight: 700; font-size: 0.85rem;" value="+91 98421 78210" placeholder="+91 XXXXXXXXXX">
+            </div>
+
+            <div style="display: flex; flex-direction: column; gap: 0.2rem;">
+              <label for="realCallLanguageSelect" style="font-size: 0.7rem; font-weight: 700; color: var(--text-muted);">LANGUAGE / மொழி:</label>
+              <select id="realCallLanguageSelect" class="form-input" style="padding: 0.45rem 0.65rem; border: 1px solid var(--border-medium); border-radius: var(--radius-sm); font-size: 0.82rem; font-weight: 600;">
+                <option value="ta" selected>தமிழ் (Tamil - Polly.Aditi)</option>
+                <option value="en">English (Indian English)</option>
+              </select>
+            </div>
+
+            <div style="display: flex; flex-direction: column; gap: 0.2rem; flex-grow: 1; min-width: 190px;">
+              <label for="realCallTopicSelect" style="font-size: 0.7rem; font-weight: 700; color: var(--text-muted);">ADVISORY REASON:</label>
+              <select id="realCallTopicSelect" class="form-input" style="padding: 0.45rem 0.65rem; border: 1px solid var(--border-medium); border-radius: var(--radius-sm); font-size: 0.82rem;">
+                <option value="Soil Moisture Deficit (மண் ஈரப்பதம் குறைவு - நீர் பற்றாக்குறை)">💧 Low Soil Moisture (ஈரப்பதம் குறைவு)</option>
+                <option value="Paddy Blast & Fungal Spores Alert (நெல் குலை நோய் எச்சரிக்கை)">🌾 Paddy Blast Spores Alert (குலை நோய்)</option>
+                <option value="Fertilizer & NPK Balancing Advisory (NPK உர ஆலோசனை)">🧪 NPK Fertilizer Timing (உர ஆலோசனை)</option>
+                <option value="General Agronomy Check-in by Village Officer (வேளாண் ஆலோசனை)">👨‍🌾 General Farmer Check-in (பொது ஆலோசனை)</option>
+              </select>
+            </div>
+
+            <div style="display: flex; align-items: flex-end; gap: 0.4rem; margin-top: auto;">
+              <button class="btn btn-sm btn-primary" id="btnTriggerRealPhoneCall" style="background: linear-gradient(135deg, #059669, #047857); padding: 0.55rem 1rem; font-weight: 800; font-size: 0.85rem; box-shadow: 0 4px 10px rgba(5, 150, 105, 0.25);">
+                <span>📞 Ring Mobile Phone Now</span>
+              </button>
+              <button class="btn btn-sm btn-secondary" id="btnConnectDirectNumber" title="Run in-browser voice simulator">
+                <span>💻 Browser Simulator</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Real Call Status Output Banner -->
+          <div id="realCallStatusBanner" style="display: none; padding: 0.65rem 0.85rem; border-radius: 6px; font-size: 0.8rem; font-weight: 600; margin-top: 0.25rem;">
+            <div id="realCallStatusText"></div>
+          </div>
+        </div>
+
+        <!-- Phone Interface Column -->
+        <div class="phone-simulator">
+          <div class="phone-screen glass-phone">
+            <div class="phone-status-bar">
+              <span>09:41</span>
+              <span>📶 BSNL 2G • 🔋 85%</span>
+            </div>
+
+            <div class="call-avatar-wrap">
+              <div class="call-avatar">👨‍🌾</div>
+              <div class="call-farmer-name" id="phoneFarmerName">Murugan Selvam</div>
+              <div class="call-farmer-hamlet" id="phoneFarmerCrop">Paddy Farm • Melattur</div>
+              <div class="call-status-indicator" id="callStatusText">Connected • 01:24</div>
+            </div>
+
+            <!-- Animated Audio Waveform -->
+            <div class="audio-waveform" id="audioWaveform">
+              <span class="wave-bar"></span>
+              <span class="wave-bar"></span>
+              <span class="wave-bar"></span>
+              <span class="wave-bar"></span>
+              <span class="wave-bar"></span>
+              <span class="wave-bar"></span>
+              <span class="wave-bar"></span>
+              <span class="wave-bar"></span>
+            </div>
+
+            <div class="speaker-state-pill" id="speakerStatePill">
+              <span class="speaker-dot"></span>
+              <span id="speakerStateText">AI Voice Assistant Speaking...</span>
+            </div>
+
+            <!-- Real-time Spoken Dialogue Viewport -->
+            <div class="live-dialogue-box" id="liveDialogueBox">
+              <!-- Live turns streamed here -->
+            </div>
+
+            <!-- Phone Call Action Controls -->
+            <div class="phone-controls">
+              <button class="phone-btn btn-mute" id="btnToggleSpeechAudio" title="Mute/Unmute Audio Speech">🔊 Voice On</button>
+              <button class="phone-btn btn-end-call" id="btnEndVoiceCall">🔴 End & Log Notes</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Query & Agronomy Console Column -->
+        <div class="voice-console">
+          <div class="console-box glass-box">
+            <h3 class="box-title">
+              <span>🌾 Ask Farmer Query (Simulate Caller)</span>
+              <span class="speech-badge">Bilingual AI Agronomist</span>
+            </h3>
+            <p class="console-desc">Click any typical Tamil / English question or type a custom farmer query to hear the AI answer in real-time:</p>
+
+            <!-- Quick Query Prompt Chips -->
+            <div class="query-chips" id="queryChipsContainer">
+              <button class="query-chip" data-query="மண்ணில் ஈரப்பதம் குறைந்துவிட்டது, என்ன செய்ய வேண்டும்?">
+                💧 "மண்ணில் ஈரப்பதம் குறைந்துவிட்டது, என்ன செய்ய வேண்டும்?"
+              </button>
+              <button class="query-chip" data-query="குலை நோய் மருந்து கூட்டுறவு சங்கத்தில் மானிய விலையில் கிடைக்குமா?">
+                🌾 "குலை நோய் மருந்து கூட்டுறவு சங்கத்தில் கிடைக்குமா?"
+              </button>
+              <button class="query-chip" data-query="யூரியா எப்போது போட வேண்டும்? தழைச்சத்து அளவு என்ன?">
+                🧪 "யூரியா மற்றும் NPK உரம் எப்போது போட வேண்டும்?"
+              </button>
+              <button class="query-chip" data-query="வேளாண் அலுவலர் உதவி எப்போது கிடைக்கும்? மானியம் உள்ளதா?">
+                🏛️ "வேளாண் அலுவலர் உதவி எப்போது கிடைக்கும்? மானியம் உள்ளதா?"
+              </button>
+            </div>
+
+            <!-- Custom Question Input -->
+            <div class="custom-query-wrap">
+              <input type="text" id="customQueryInput" placeholder="Type or click mic to speak query (e.g. தண்ணீர் பற்றாக்குறை)..." class="custom-query-input">
+              <button class="btn btn-secondary btn-icon" id="btnToggleMic" title="Click to speak via Microphone">
+                <span id="micIcon">🎤</span>
+              </button>
+              <button class="btn btn-primary" id="btnSendFarmerQuery">Send Query</button>
+            </div>
+            <div id="micStatusText" style="font-size: 0.72rem; color: var(--emerald-700); margin-top: 0.25rem; display: none;">
+              🔴 Listening to your voice... Speak your agricultural query now!
+            </div>
+          </div>
+
+          <!-- Real-time Extracted Notes & Officer Action Items -->
+          <div class="console-box glass-box action-notes-box">
+            <div class="notes-header">
+              <h3 class="box-title">📝 AI Extracted Farmer Queries & Action Items</h3>
+              <span class="badge badge-outline">Auto-Transcribed</span>
+            </div>
+
+            <div class="extracted-section">
+              <div class="sub-label">KEY QUESTIONS ASKED BY FARMER:</div>
+              <ul class="query-list" id="extractedQueriesList">
+                <li class="query-item">"மண்ணில் ஈரப்பதம் குறைந்துவிட்டது, கால்வாய் தண்ணீர் எப்போது திறப்பார்கள்?"</li>
+                <li class="query-item">"குலை நோய் தடுப்பு மருந்து கூட்டுறவு சங்கத்தில் கிடைக்குமா?"</li>
+              </ul>
+            </div>
+
+            <div class="extracted-section">
+              <div class="sub-label">ASSIGNED ACTION ITEMS FOR VILLAGE OFFICER:</div>
+              <div class="action-items-list" id="extractedActionsList">
+                <div class="action-item-pill">
+                  <span class="action-check">☐</span>
+                  <span>Coordinate with Melattur PACCS for Tricyclazole 75WP supply to farmer</span>
+                </div>
+                <div class="action-item-pill">
+                  <span class="action-check">☐</span>
+                  <span>Schedule field visit by VAO for upcoming Thursday morning</span>
+                </div>
+              </div>
+            </div>
+
+            <button class="btn btn-success btn-block" id="btnSaveCallNotesToDB">
+              <span>💾 Save Call Notes & Follow-up Tasks to Farmer Record</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================================================================= -->
+  <!-- MODAL 4: OFFLINE FARMER REGISTRATION & FIELD MAPPING (VAO WEB)     -->
+  <!-- ================================================================= -->
+  <div id="registerFarmerModal" class="modal-backdrop hidden" aria-hidden="true">
+    <div class="modal-dialog modal-md glass-modal">
+      <div class="modal-header">
+        <div class="modal-header-info">
+          <div class="modal-badge">OFFLINE FARMER REGISTRATION • VAO PORTAL</div>
+          <h2 class="modal-title">Register Farmer & Map Field Plot</h2>
+          <p class="modal-subtitle">For farmers without smartphone / low connectivity. Web-only profile & zone initialization.</p>
+        </div>
+        <button class="btn-close-modal" id="btnCloseRegisterModal">✕</button>
+      </div>
+
+      <div class="modal-body">
+        <form id="registerFarmerForm" style="display: flex; flex-direction: column; gap: 1rem;">
+          <div class="form-group">
+            <label class="form-label">Farmer Mobile Number (அலைபேசி எண்) *</label>
+            <input type="tel" id="regPhone" required class="form-input" placeholder="+91 98421 78210" style="padding: 0.65rem; border: 1px solid var(--border-medium); border-radius: var(--radius-sm); font-family: var(--font-mono); font-weight: 700;">
+          </div>
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem;">
+            <div class="form-group">
+              <label class="form-label">Full Name (பெயர்) *</label>
+              <input type="text" id="regName" required class="form-input" placeholder="e.g. Sundaramurthy" style="padding: 0.65rem; border: 1px solid var(--border-medium); border-radius: var(--radius-sm);">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Tamil Name (தமிழ் பெயர்)</label>
+              <input type="text" id="regNameTa" class="form-input" placeholder="சுந்தரமூர்த்தி" style="padding: 0.65rem; border: 1px solid var(--border-medium); border-radius: var(--radius-sm);">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Hamlet / Village Ward (கிராமப் பகுதி) *</label>
+            <input type="text" id="regHamlet" required class="form-input" placeholder="e.g. Melattur North Street" value="Melattur North Street" style="padding: 0.65rem; border: 1px solid var(--border-medium); border-radius: var(--radius-sm);">
+          </div>
+
+          <div style="display: grid; grid-template-columns: 1.2fr 1fr; gap: 0.75rem;">
+            <div class="form-group">
+              <label class="form-label">Primary Crop (பயிர்) *</label>
+              <select id="regCrop" class="form-input" style="padding: 0.65rem; border: 1px solid var(--border-medium); border-radius: var(--radius-sm);">
+                <option value="Paddy (CR1009 / Samba)">Paddy (CR1009 / Samba)</option>
+                <option value="Groundnut (VRI 8)">Groundnut (VRI 8)</option>
+                <option value="Cotton (MCU 5)">Cotton (MCU 5)</option>
+                <option value="Sugarcane (Co 86032)">Sugarcane (Co 86032)</option>
+                <option value="Banana (Grand Naine / G9)">Banana (Grand Naine / G9)</option>
+                <option value="Tomato (Arka Rakshak)">Tomato (Arka Rakshak)</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Land Area (Acres) *</label>
+              <input type="number" step="0.5" id="regAcres" required class="form-input" value="3.5" style="padding: 0.65rem; border: 1px solid var(--border-medium); border-radius: var(--radius-sm);">
+            </div>
+          </div>
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem;">
+            <div class="form-group">
+              <label class="form-label">Soil Moisture % (சென்சார் ஈரப்பதம்)</label>
+              <input type="number" id="regMoisture" class="form-input" value="22" style="padding: 0.65rem; border: 1px solid var(--border-medium); border-radius: var(--radius-sm);">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Device Type</label>
+              <select id="regDevice" class="form-input" style="padding: 0.65rem; border: 1px solid var(--border-medium); border-radius: var(--radius-sm);">
+                <option value="FEATURE_PHONE (2G Keypad - No Smartphone)">Feature Phone (2G / No Smartphone)</option>
+                <option value="FEATURE_PHONE (Basic 2G Bar Phone)">Basic 2G Bar Phone</option>
+              </select>
+            </div>
+          </div>
+        </form>
+      </div>
+
+      <div class="modal-footer">
+        <button class="btn btn-secondary" id="btnCancelRegister">Cancel</button>
+        <button class="btn btn-primary" id="btnSubmitRegisterFarmer">
+          <span>💾 Save Profile & Map Virtual Zones ➔</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================================================================= -->
+  <!-- MODAL 5: TWILIO TELEPHONY CONFIGURATION MODAL                     -->
+  <!-- ================================================================= -->
+  <div id="twilioSettingsModal" class="modal-backdrop hidden" aria-hidden="true">
+    <div class="modal-dialog modal-md glass-modal">
+      <div class="modal-header">
+        <div class="modal-header-info">
+          <div class="modal-badge">TELECOMMUNICATION GATEWAY</div>
+          <h2 class="modal-title">Twilio Voice API Configuration</h2>
+          <p class="modal-subtitle">Connect your Twilio Account to enable real outbound phone calls to farmers' mobile numbers.</p>
+        </div>
+        <button class="btn-close-modal" id="btnCloseTwilioModal">✕</button>
+      </div>
+
+      <div class="modal-body">
+        <div style="background: #eff6ff; border: 1px solid #bfdbfe; border-radius: var(--radius-sm); padding: 0.85rem; font-size: 0.78rem; color: #1e40af; margin-bottom: 1rem; line-height: 1.45;">
+          <strong>💡 Free Trial Setup in 2 Minutes:</strong>
+          <ol style="margin-left: 1.2rem; margin-top: 0.35rem; margin-bottom: 0;">
+            <li>Go to <a href="https://www.twilio.com" target="_blank" style="color: #2563eb; font-weight: bold; text-decoration: underline;">twilio.com</a> & create a free account (with free credits).</li>
+            <li>Copy the <strong>Account SID</strong> and <strong>Auth Token</strong> from the console dashboard.</li>
+            <li>Get a free trial phone number and paste below.</li>
+          </ol>
+        </div>
+
+        <form id="twilioConfigForm" style="display: flex; flex-direction: column; gap: 0.85rem;">
+          <div class="form-group">
+            <label class="form-label">Twilio Account SID *</label>
+            <input type="text" id="cfgTwilioSid" required class="form-input" placeholder="e.g. ACxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx" style="padding: 0.6rem; font-family: var(--font-mono); font-size: 0.82rem;">
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Twilio Auth Token *</label>
+            <input type="password" id="cfgTwilioToken" required class="form-input" placeholder="e.g. your_auth_token_here" style="padding: 0.6rem; font-family: var(--font-mono); font-size: 0.82rem;">
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Twilio Outbound Caller ID / Virtual Number *</label>
+            <input type="text" id="cfgTwilioPhone" required class="form-input" placeholder="e.g. +12055550123" style="padding: 0.6rem; font-family: var(--font-mono); font-size: 0.82rem;">
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Public Server URL (Optional / for ngrok webhooks)</label>
+            <input type="url" id="cfgPublicUrl" class="form-input" placeholder="Leave empty for Direct TwiML Mode (Recommended)" style="padding: 0.6rem; font-family: var(--font-mono); font-size: 0.82rem;">
+            <span style="font-size: 0.7rem; color: var(--text-muted); margin-top: 0.2rem;">Leave blank to use <strong>Direct TwiML Mode</strong>: calls your phone immediately without ngrok!</span>
+          </div>
+        </form>
+      </div>
+
+      <div class="modal-footer">
+        <button class="btn btn-secondary" id="btnCancelTwilio">Cancel</button>
+        <button class="btn btn-primary" id="btnSaveTwilioConfig">
+          <span>💾 Save & Activate Twilio Keys</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification element -->
+  <div id="toastNotification" class="toast hidden">
+    <span class="toast-icon">✨</span>
+    <span class="toast-message" id="toastMessage">Action completed</span>
+  </div>
+
+  <script src="/admin/admin.js"></script>
+</body>
+</html>

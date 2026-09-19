@@ -1,0 +1,6 @@
+path: d:/FLUTTER PROJECTS/AgriVyn/data/processed/sugarcane_seg
+train: images/train
+val: images/val
+
+names:
+  0: disease_lesion
