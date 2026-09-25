@@ -123,3 +123,9 @@ training/*.log
 # ── ngrok / tunnel configs ───────────────────────────────────
 ngrok.yml
 *.ngrok.io
+
+# Tiny ML Edge AI Module
+Tiny ML/data/raw/temprature_tel_hr_tamil_nadu_sw_gw_tn_2021_2025.csv
+Tiny ML/venv/
+Tiny ML/.venv/
+

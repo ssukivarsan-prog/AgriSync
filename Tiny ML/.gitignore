@@ -1,0 +1,16 @@
+# Python environment & cache
+__pycache__/
+*.py[cod]
+*$py.class
+venv/
+.venv/
+env/
+.env
+
+# Large raw CSV (>100MB blocked by GitHub) - Tracked via compressed .zip
+data/raw/temprature_tel_hr_tamil_nadu_sw_gw_tn_2021_2025.csv
+
+# OS metadata
+.DS_Store
+Thumbs.db
+Desktop.ini
